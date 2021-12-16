@@ -1,14 +1,12 @@
 version: 2.1
-
 orbs:
   node: circleci/node@4.2.1
   slack: circleci/slack@4.3.3
-
 jobs:
   build_deploy_stg:
     executor:
       name: node/default
-      tag: '12.19.0'
+      tag: ‘12.19.0’
     steps:
       - checkout
       - node/install-packages:
@@ -18,60 +16,60 @@ jobs:
           command: yarn build
       - run:
           name: Deploy Stg
-          command: firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+          command: ./node_modules/.bin/firebase use monla-app && ./node_modules/.bin/firebase deploy --token “$FIREBASE_TOKEN” --only hosting:monla-app
       - slack/notify:
           event: fail
           custom: |
             {
-              "attachments": [
+              “attachments”: [
                 {
-                  "color": "#f44336",
-                  "blocks": [
+                  “color”: “#F44336",
+                  “blocks”: [
                     {
-                      "type": "header",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "Deployment failed! :x:",
-                        "emoji": true
+                      “type”: “header”,
+                      “text”: {
+                        “type”: “plain_text”,
+                        “text”: “Deployment failed! :x:”,
+                        “emoji”: true
                       }
                     },
                     {
-                      "type": "section",
-                      "fields": [
+                      “type”: “section”,
+                      “fields”: [
                         {
-                          "type": "mrkdwn",
-                          "text": "*Project: *\n${CIRCLE_PROJECT_REPONAME}"
+                          “type”: “mrkdwn”,
+                          “text”: “*Project: *\n${CIRCLE_PROJECT_REPONAME}”
                         },
                         {
-                          "type": "mrkdwn",
-                          "text": "*Job: *\n${CIRCLE_JOB}"
+                          “type”: “mrkdwn”,
+                          “text”: “*Job: *\n${CIRCLE_JOB}”
                         }
                       ]
                     },
                     {
-                      "type": "section",
-                      "fields": [
+                      “type”: “section”,
+                      “fields”: [
                         {
-                          "type": "mrkdwn",
-                          "text": "*Branch: *\n${CIRCLE_BRANCH}"
+                          “type”: “mrkdwn”,
+                          “text”: “*Branch: *\n${CIRCLE_BRANCH}”
                         },
                         {
-                          "type": "mrkdwn",
-                          "text": "*Author: *\n${CIRCLE_USERNAME}"
+                          “type”: “mrkdwn”,
+                          “text”: “*Author: *\n${CIRCLE_USERNAME}”
                         }
                       ]
                     },
                     {
-                      "type": "actions",
-                      "elements": [
+                      “type”: “actions”,
+                      “elements”: [
                         {
-                          "type": "button",
-                          "text": {
-                            "type": "plain_text",
-                            "text": "View Job :eyes:",
-                            "emoji": true
+                          “type”: “button”,
+                          “text”: {
+                            “type”: “plain_text”,
+                            “text”: “View Job :eyes:”,
+                            “emoji”: true
                           },
-                          "url": "${CIRCLE_BUILD_URL}"
+                          “url”: “${CIRCLE_BUILD_URL}”
                         }
                       ]
                     }
@@ -83,55 +81,55 @@ jobs:
           event: pass
           custom: |
             {
-              "attachments": [
+              “attachments”: [
                 {
-                  "color": "#4caf50",
-                  "blocks": [
+                  “color”: “#4CAF50”,
+                  “blocks”: [
                     {
-                      "type": "header",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "Deployment Successful! :tada:",
-                        "emoji": true
+                      “type”: “header”,
+                      “text”: {
+                        “type”: “plain_text”,
+                        “text”: “Deployment Successful! :tada:”,
+                        “emoji”: true
                       }
                     },
                     {
-                      "type": "section",
-                      "fields": [
+                      “type”: “section”,
+                      “fields”: [
                         {
-                          "type": "mrkdwn",
-                          "text": "*Project: *\n${CIRCLE_PROJECT_REPONAME}"
+                          “type”: “mrkdwn”,
+                          “text”: “*Project: *\n${CIRCLE_PROJECT_REPONAME}”
                         },
                         {
-                          "type": "mrkdwn",
-                          "text": "*Job: *\n${CIRCLE_JOB}"
+                          “type”: “mrkdwn”,
+                          “text”: “*Job: *\n${CIRCLE_JOB}”
                         }
                       ]
                     },
                     {
-                      "type": "section",
-                      "fields": [
+                      “type”: “section”,
+                      “fields”: [
                         {
-                          "type": "mrkdwn",
-                          "text": "*Branch: *\n${CIRCLE_BRANCH}"
+                          “type”: “mrkdwn”,
+                          “text”: “*Branch: *\n${CIRCLE_BRANCH}”
                         },
                         {
-                          "type": "mrkdwn",
-                          "text": "*Author: *\n${CIRCLE_USERNAME}"
+                          “type”: “mrkdwn”,
+                          “text”: “*Author: *\n${CIRCLE_USERNAME}”
                         }
                       ]
                     },
                     {
-                      "type": "actions",
-                      "elements": [
+                      “type”: “actions”,
+                      “elements”: [
                         {
-                          "type": "button",
-                          "text": {
-                            "type": "plain_text",
-                            "text": "View Job :eyes:",
-                            "emoji": true
+                          “type”: “button”,
+                          “text”: {
+                            “type”: “plain_text”,
+                            “text”: “View Job :eyes:”,
+                            “emoji”: true
                           },
-                          "url": "${CIRCLE_BUILD_URL}"
+                          “url”: “${CIRCLE_BUILD_URL}”
                         }
                       ]
                     }
