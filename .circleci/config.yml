@@ -139,7 +139,6 @@ workflows:
   build_deploy_stg:
     jobs:
       - build_deploy_stg:
-          context: test-stg
           filters:
             branches:
               only: master
