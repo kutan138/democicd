@@ -14,9 +14,6 @@ jobs:
       - run:
           name: Build Stg
           command: yarn build
-      - run:
-          name: Deploy Stg
-          command: ./node_modules/.bin/firebase use monla-app && ./node_modules/.bin/firebase deploy --token “$FIREBASE_TOKEN” --only hosting:monla-app
       - slack/notify:
           event: fail
           custom: |
@@ -142,7 +139,7 @@ workflows:
   build_deploy_stg:
     jobs:
       - build_deploy_stg:
-          context: monla-stg
+          context: test-stg
           filters:
             branches:
               only: develop
