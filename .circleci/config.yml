@@ -142,4 +142,4 @@ workflows:
           context: test-stg
           filters:
             branches:
-              only: develop
+              only: master
