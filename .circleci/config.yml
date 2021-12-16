@@ -18,7 +18,7 @@ jobs:
           command: yarn build
       - run:
           name: Deploy Stg
-          command: ./node_modules/.bin/firebase use democicd-45d61 && ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --only hosting:democicd-45d61
+          command: firebase deploy --token=$FIREBASE_TOKEN --non-interactive
       - slack/notify:
           event: fail
           custom: |
